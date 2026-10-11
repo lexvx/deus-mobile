@@ -1,11 +1,7 @@
 import { useSelector } from '@legendapp/state/react';
 import { useTranslation } from '@ronas-it/react-native-common-modules/i18n';
 import { ReactElement, useRef } from 'react';
-import { Alert } from 'react-native';
-import {
-  ContactSupportSheet,
-  ContactSupportSheetMethods,
-} from '@open-webui-react-native/mobile/settings/features/contact-support-sheet';
+import { Alert, Linking } from 'react-native';
 import { SettingsSection, SettingsSectionOption } from '@open-webui-react-native/mobile/settings/ui/section';
 import { useLogout } from '@open-webui-react-native/mobile/shared/features/use-logout';
 import { useSetSelectedModel } from '@open-webui-react-native/mobile/shared/features/use-set-selected-model';
@@ -31,7 +27,6 @@ import {
 } from '@open-webui-react-native/shared/utils/config';
 import { hapticFeedbackService } from '@open-webui-react-native/shared/utils/haptic-feedback-service';
 import { useNavigateOnce } from '@open-webui-react-native/shared/utils/navigation';
-import { storeReviewService } from '@open-webui-react-native/shared/utils/store-review-service';
 import { ToastService } from '@open-webui-react-native/shared/utils/toast-service';
 import {
   AppVersionFooter,
@@ -79,7 +74,6 @@ export function Settings(): ReactElement {
   const defaultModelSheetRef = useRef<DefaultModelSheetMethods>(null);
   const defaultSystemPromptSheetRef = useRef<DefaultSystemPromptSheetMethods>(null);
   const changePasswordSheetRef = useRef<ChangePasswordSheetMethods>(null);
-  const contactSupportSheetRef = useRef<ContactSupportSheetMethods>(null);
   const languageSheetRef = useRef<SelectionSheetMethods>(null);
   const markdownRendererSheetRef = useRef<SelectionSheetMethods>(null);
 
@@ -283,17 +277,12 @@ export function Settings(): ReactElement {
     },
   ];
 
-  const handleRateAppPress = (): void => {
-    storeReviewService.openStoreReview();
-  };
-
   const feedbackOptions: Array<SettingsSectionOption> = [
     {
       label: translate('TEXT_REPORT_A_BUG'),
       iconName: 'message',
-      onPress: () => contactSupportSheetRef.current?.present(),
+      onPress: () => { void Linking.openURL('https://github.com/lexvx/deus-mobile/issues'); },
     },
-    { label: translate('TEXT_RATE_APP'), iconName: 'star', onPress: handleRateAppPress },
   ];
 
   const chatsOptions: Array<SettingsSectionOption> = [
@@ -387,7 +376,6 @@ export function Settings(): ReactElement {
         systemPrompt={settings?.ui.system}
         onConfirm={handleDefaultSystemPromptChange}
       />
-      <ContactSupportSheet ref={contactSupportSheetRef} />
       <SelectionSheet
         ref={languageSheetRef}
         title={translate('LANGUAGE_SHEET.TEXT_TITLE')}

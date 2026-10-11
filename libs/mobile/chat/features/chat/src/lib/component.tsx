@@ -31,7 +31,7 @@ import { webSocketConfig, webSocketState$ } from '@open-webui-react-native/share
 import { ToastService } from '@open-webui-react-native/shared/utils/toast-service';
 import { useAppStateChange } from '@open-webui-react-native/shared/utils/use-app-state-change';
 import { ActiveInputMode } from './enums';
-import { patchNewChat, requestStoreReview } from './utils';
+import { patchNewChat } from './utils';
 
 const LazyChatMessagesList = React.lazy(() => import('./components/messages-list/component'));
 
@@ -274,7 +274,6 @@ export function Chat({ chatId, selectedModelId, isNewChat, resetToChatsList }: C
   useEffect(() => {
     if (isNewChat && !firstMessageGeneratedRef.current && isAssistantMessage && currentMessage.done) {
       firstMessageGeneratedRef.current = true;
-      requestStoreReview(chatId);
     }
   }, [isNewChat, chatId, currentMessage?.done, isAssistantMessage]);
 
