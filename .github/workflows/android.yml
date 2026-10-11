@@ -40,6 +40,9 @@ jobs:
           p=Path('apps/mobile/android/app/build.gradle')
           s=p.read_text().replace('signingConfig signingConfigs.debug', '')
           p.write_text(s)
+          p=Path('apps/mobile/android/app/src/main/AndroidManifest.xml')
+          s=p.read_text().replace('android:allowBackup="false"', 'android:allowBackup="false" tools:replace="android:allowBackup"')
+          p.write_text(s)
           PY
       - name: Build standalone APK
         working-directory: apps/mobile/android
@@ -49,4 +52,3 @@ jobs:
           name: deus-android-unsigned
           path: apps/mobile/android/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
-
