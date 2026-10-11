@@ -17,7 +17,6 @@ import { useSocket } from '@open-webui-react-native/shared/data-access/websocket
 import { useNetworkConnection } from '@open-webui-react-native/shared/features/network';
 import { constants, LanguageCode } from '@open-webui-react-native/shared/utils/config';
 import { setupReactotron } from '@open-webui-react-native/shared/utils/reactotron';
-import { supabaseService } from '@open-webui-react-native/shared/utils/supabase-service';
 import { i18n, setLanguage } from '@ronas-it/react-native-common-modules/i18n';
 import * as Sentry from '@sentry/react-native';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
@@ -227,4 +226,3 @@ function RootLayout(): ReactElement | null {
 }
 
 export default Sentry.wrap(RootLayout);
-

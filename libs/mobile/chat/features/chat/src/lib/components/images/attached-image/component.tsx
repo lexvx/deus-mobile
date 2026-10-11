@@ -39,7 +39,8 @@ export function AttachedImageView({
   const loadImage = async (): Promise<void> => {
     const image = await Image.loadAsync({
       uri: url,
-      headers: { Authorization: `Bearer ${appStorageService.token.get()}` },
+      headers: url.startsWith('https://ai.lex42.ru/api/v1/files/')
+        ? { Authorization: `Bearer ${appStorageService.token.get()}` } : undefined,
     });
     setImage(image);
 
@@ -57,7 +58,7 @@ export function AttachedImageView({
     <AppPressable onPress={onPress} className='self-end relative'>
       <Animated.View style={imageAnimatedStyle}>
         <AppImage
-          source={{ uri: url }}
+          source={image ?? { uri: url }}
           style={[commonStyles, style]}
           {...props} />
       </Animated.View>
