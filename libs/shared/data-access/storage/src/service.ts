@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import { MMKV } from 'react-native-mmkv';
+import * as SecureStore from 'expo-secure-store';
 import { StorageItem } from './models';
 
 export const storage = new MMKV({
@@ -9,7 +10,16 @@ export const storage = new MMKV({
 });
 
 class AppStorageService {
-  public token = new StorageItem('token', storage);
+  public token = {
+    get: (): string | undefined => SecureStore.getItem('deus-session') || undefined,
+    set: (value: string | number | boolean | null): void => {
+      if (value === null) { this.token.remove(); return; }
+      SecureStore.setItem('deus-session', String(value));
+      storage.delete('token');
+    },
+    remove: (): void => { SecureStore.setItem('deus-session', ''); storage.delete('token'); },
+    getBoolean: (): undefined => undefined,
+  };
   public apiUrl = new StorageItem('apiUrl', storage);
   public locale = new StorageItem('locale', storage);
   public markdownRenderer = new StorageItem('markdownRenderer', storage);
@@ -20,3 +30,4 @@ class AppStorageService {
 }
 
 export const appStorageService = new AppStorageService();
+

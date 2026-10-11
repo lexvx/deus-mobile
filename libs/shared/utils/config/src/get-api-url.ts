@@ -4,17 +4,19 @@ import { appStorageService } from '@open-webui-react-native/shared/data-access/s
 import { appEnv } from '@open-webui-react-native/shared/utils/app-env';
 
 export const ronasApiUrl = appEnv.select({
-  development: 'https://ai.ronas.online',
-  staging: 'https://ai.ronas.online',
-  production: 'https://ai.ronas.online',
+  development: 'https://ai.lex42.ru',
+  staging: 'https://ai.lex42.ru',
+  production: 'https://ai.lex42.ru',
 });
 
-export const testApiUrl = 'https://ai.test-api.online';
+export const testApiUrl = 'https://deus.invalid';
 
 const normalizeUrl = (url?: string): string => (url ?? '').trim().replace(/\/+$/, '');
 
 export const resolveApiUrl = (url: string): string => {
-  return normalizeUrl(url) === normalizeUrl(testApiUrl) ? normalizeUrl(ronasApiUrl) : normalizeUrl(url);
+  const normalized = normalizeUrl(url);
+  if (normalized !== 'https://ai.lex42.ru') throw new Error('Этот клиент подключается только к https://ai.lex42.ru');
+  return normalized;
 };
 
 export const isTestApiUrl = (url?: string): boolean =>
@@ -36,3 +38,4 @@ export const getHost = (url: string): string =>
     .replace(/^https?:\/\//, '')
     .split('/')[0]
     .toLowerCase();
+

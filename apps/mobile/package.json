@@ -121,7 +121,8 @@
     "tailwind-merge": "^3.3.0",
     "tailwind-variants": "^1.0.0",
     "tailwindcss": "^3.4.17",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "expo-secure-store": "~57.0.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.29.7",
@@ -138,5 +139,7 @@
         "listUnknownPackages": false
       }
     }
-  }
+  },
+  "license": "GPL-3.0-only"
 }
+

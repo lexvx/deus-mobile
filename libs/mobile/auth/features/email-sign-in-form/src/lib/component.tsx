@@ -29,7 +29,7 @@ export function EmailSignInForm({ onSuccess, onApiUrlChange, setOauthProviders }
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
 
-  const { query, setQuery, debouncedQuery } = useDebouncedQuery({ initialValue: appStorageService.apiUrl.get() });
+  const { query, setQuery, debouncedQuery } = useDebouncedQuery({ initialValue: appStorageService.apiUrl.get() || 'https://ai.lex42.ru' });
 
   const {
     control,
@@ -77,7 +77,7 @@ export function EmailSignInForm({ onSuccess, onApiUrlChange, setOauthProviders }
   const isFormValid = (!isLoginFormRequired || isValid) && isUrlValid && isUrlWithConfig;
 
   const onSubmit = (form: FormValues<EmailFormSchema>): void => {
-    mutate({ email: form.email, password: form.password });
+    mutate({ email: form.email.trim().toLowerCase(), password: form.password });
   };
 
   const signInWithoutAuth = (): void => {
@@ -144,7 +144,7 @@ export function EmailSignInForm({ onSuccess, onApiUrlChange, setOauthProviders }
             autoCorrect={false}
             secureTextEntry={false}
             returnKeyType='next'
-            keyboardType='email-address'
+            keyboardType='default'
             placeholder={emailFormConfig.emailPlaceholder}
             label={translate('TEXT_EMAIL_ADDRESS')}
             onSubmitEditing={() => passwordRef.current?.focus()}
@@ -185,3 +185,4 @@ export function EmailSignInForm({ onSuccess, onApiUrlChange, setOauthProviders }
     </View>
   );
 }
+

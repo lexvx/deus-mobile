@@ -44,7 +44,7 @@ Sentry.init({
   environment: Constants.expoConfig?.extra?.env,
   debug: false,
   integrations: [reactNavigationIntegration],
-  enabled: !__DEV__,
+  enabled: false,
   beforeBreadcrumb,
 });
 
@@ -121,7 +121,7 @@ Object.entries({ en, ru, es, pt, fr, de, zh, ja, ro }).forEach(([locale, plurali
 const useLanguage = setLanguage(translations, constants.defaultLocale);
 
 setupReactotron('open-web-ui');
-supabaseService.init();
+// External feedback services are disabled in the Deus client.
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -227,3 +227,4 @@ function RootLayout(): ReactElement | null {
 }
 
 export default Sentry.wrap(RootLayout);
+

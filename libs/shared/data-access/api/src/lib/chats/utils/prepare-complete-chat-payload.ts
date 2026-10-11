@@ -123,7 +123,7 @@ export function prepareCompleteChatPayload({
                     ...acc,
                     new ChatMessageContent({
                       type: 'image_url',
-                      imageUrl: { url: file.url },
+                      imageUrl: { url: file.url.startsWith('https://ai.lex42.ru/api/v1/files/') ? file.url.slice('https://ai.lex42.ru'.length) : file.url },
                     }),
                   ]
                 : acc,
@@ -143,14 +143,12 @@ export function prepareCompleteChatPayload({
 
   const files = getCompletionFiles(messages);
 
-  const historyMessagesCount = Object.keys(chatResponse?.chat.history.messages ?? {}).length;
-  const isFirstExchange = historyMessagesCount > 0 && historyMessagesCount <= 2;
 
   const request = new CompleteChatRequest({
     backgroundTasks: new BackgroundTasks({
-      followUpGeneration: true,
-      titleGeneration: isFirstExchange,
-      tagsGeneration: isFirstExchange,
+      followUpGeneration: false,
+      titleGeneration: false,
+      tagsGeneration: false,
     }),
     features: new Features({
       codeInterpreter: generationOptions?.includes(ChatGenerationOption.CODE_INTERPRETER),
@@ -174,3 +172,4 @@ export function prepareCompleteChatPayload({
 
   return request;
 }
+

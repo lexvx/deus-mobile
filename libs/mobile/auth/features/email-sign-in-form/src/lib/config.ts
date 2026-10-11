@@ -1,4 +1,5 @@
 export const emailFormConfig = {
-  emailPlaceholder: 'yourname@example.com',
-  apiUrlPlaceholder: 'https://someurl.com/api',
+  emailPlaceholder: 'admin',
+  apiUrlPlaceholder: 'https://ai.lex42.ru',
 };
+

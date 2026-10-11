@@ -1,3 +1,22 @@
+# Deus ex machina — Android
+
+Собственный Android-клиент для https://ai.lex42.ru, основанный на Open MobileUI (Ronas IT).
+
+- Вход по логину и независимому паролю веб-приложения.
+- Токен сессии хранится в Android Keystore (Expo SecureStore); пароль не сохраняется.
+- Модели, история, потоковые ответы и вложения синхронизируются с сервером.
+- Русский интерфейс по умолчанию. HTTPS, без сторонней телеметрии и Expo OTA.
+- Аудио распознаётся сервером через защищённую загрузку файлов.
+- Интернет, инструменты и административные функции ограничены настройками сервера.
+
+APK публикуется в [Releases](https://github.com/lexvx/deus-mobile/releases). Исходный код и изменения доступны под GPL-3.0.
+
+Сборка: `npm ci`, затем в `apps/mobile` выполнить `npx expo prebuild --platform android --no-install`; собрать `assembleRelease` в сгенерированном Android-проекте. Для установки APK необходима подпись собственным закрытым ключом. GitHub Actions собирает неподписанный артефакт; ключ подписи не хранится в публичном репозитории.
+
+---
+
+## Upstream project
+
 <div align="center">
 
 <img src="docs/images/logo.png" alt="Open MobileUI logo" width="120">
@@ -194,3 +213,4 @@ _Professional mobile development services • Open source contributors_
 [Website](https://ronasit.com?utm_source=github&utm_medium=referral&utm_campaign=open_webui_react_native) • [GitHub](https://github.com/RonasIT) • [Email](mailto:openmobileui@ronasit.com)
 
 </div>
+

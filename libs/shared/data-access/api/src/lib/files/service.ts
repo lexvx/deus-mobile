@@ -22,8 +22,10 @@ class FilesService {
   }
 
   public async getFileContent(id: string): Promise<FileDataContent> {
-    return getApiService().get<FileDataContent>(`${filesApiConfig.route}${id}/data/content`);
+    const file = await getApiService().get<FileData>(`${filesApiConfig.route}${id}`);
+    return file.data;
   }
 }
 
 export const filesService = new FilesService();
+
