@@ -27,7 +27,7 @@ export class MediaLibraryService {
       await FileSystem.downloadAsync(
         source,
         targetPath,
-        authorizationToken ? { headers: { Authorization: `Bearer ${authorizationToken}` } } : undefined,
+        authorizationToken && source.startsWith('https://ai.lex42.ru/') ? { headers: { Authorization: `Bearer ${authorizationToken}` } } : undefined,
       );
     } else {
       const base64 = source.startsWith('data:image') ? source.split(',')[1] : source;

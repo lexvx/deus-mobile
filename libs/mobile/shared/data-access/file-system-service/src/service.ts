@@ -100,7 +100,7 @@ export class FileSystemService {
       await this.downloadFile(
         source,
         fileUri,
-        authorizationToken ? { headers: { Authorization: `Bearer ${authorizationToken}` } } : undefined,
+        authorizationToken && source.startsWith('https://ai.lex42.ru/') ? { headers: { Authorization: `Bearer ${authorizationToken}` } } : undefined,
       );
     }
 

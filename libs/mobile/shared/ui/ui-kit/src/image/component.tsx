@@ -12,7 +12,7 @@ function AppImage({ source, authorizationToken, ...props }: AppImageProps): Reac
     <Image
       source={
         typeof source === 'object'
-          ? { headers: authorizationToken ? { Authorization: `Bearer ${authorizationToken}` } : undefined, ...source }
+          ? { headers: authorizationToken && source && 'uri' in source && typeof source.uri === 'string' && source.uri.startsWith('https://ai.lex42.ru/') ? { Authorization: `Bearer ${authorizationToken}` } : undefined, ...source }
           : source
       }
       {...props}
