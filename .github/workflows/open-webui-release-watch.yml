@@ -22,6 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
 
       - name: Fetch latest open-webui release
         id: latest_release
@@ -71,6 +72,7 @@ jobs:
             git commit -m "chore: acknowledge open-webui release ${RELEASE_TAG}"
             # Retry only persistence, never resend within this run.
             for attempt in 1 2 3; do
+              echo "Persisting delivery state (attempt ${attempt})"
               if git push origin HEAD:main; then exit 0; fi
               git fetch origin main
               git rebase origin/main
