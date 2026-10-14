@@ -1,0 +1,31 @@
+name: Open WebUI Release Watch Tests
+
+on:
+  push:
+    paths:
+      - '.github/scripts/*open_webui_release_watch*'
+      - '.github/workflows/open-webui-release-watch*.yml'
+  pull_request:
+    paths:
+      - '.github/scripts/*open_webui_release_watch*'
+      - '.github/workflows/open-webui-release-watch*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test delivery and retry scenarios (no real webhook)
+        run: python3 -m unittest discover -s .github/scripts -p 'test_open_webui_release_watch.py' -v
+      - name: Validate workflow syntax
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh release download v1.7.7 --repo rhysd/actionlint --pattern actionlint_1.7.7_linux_amd64.tar.gz --dir "$RUNNER_TEMP"
+          tar -xzf "$RUNNER_TEMP/actionlint_1.7.7_linux_amd64.tar.gz" -C "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint" .github/workflows/open-webui-release-watch.yml .github/workflows/open-webui-release-watch-tests.yml
